@@ -30,6 +30,11 @@ object List {
     else Cons(as.head, apply(as.tail: _*))
   }
 
+  def append[A](a1: List[A], a2: List[A]): List[A] = a1 match {
+    case Nil => a2    // a1의 마지막 원소까지 간 다음 그 뒤에 a2를 붙임.
+    case Cons(a, as) => Cons(a, append(as, a2))
+  }
+
   // Exercise 3.2
   def tail[A](as: List[A]): List[A] = as match{
     case Nil => Nil
@@ -40,6 +45,31 @@ object List {
   def setHead[A](as: List[A], a: A): List[A] = as match{
     case Nil => Cons(a, Nil)
     case Cons(x, xs) => Cons(a, xs) //여기서도 실제로 x값이 쓰이지 않으므로 x를 _로 표현하는 게 나음.
+  }
+
+  // Exercise 3.4 (못풀었음 ㅠㅠ)
+  // 내가 접근한 방법: match를 사용하고 함수 안에 또 함수를 정의하려고 했는데
+  // match 블락 안에서는 case문만 나와야 하는 건가보다
+  def drop[A](l: List[A], n: Int): List[A] = {
+    if (n <= 0) l
+    else l match{
+      case Nil => Nil
+      case Cons(_, as) => drop(as, n-1)
+    }
+  }
+
+  // Exercise 3.5 (못풀었음ㅠㅠ)
+  // case에서 if문도 쓸 수 있다!
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match{
+    case Cons(a, as) if f(a) => dropWhile(as, f)
+    case _ => l
+  }
+
+  // Exercise 3.6 (못풀었음ㅠㅠ)
+  def init[A](l: List[A]): List[A] = l match{
+    case Nil => Nil
+    case (_, Nil) => Nil  // 마지가 원소 하나에 대해서 바로 Nil을 리턴해줌으로써 마지막 원소를 제거하는 셈.
+    case Cons(a, as) => Cons(a, init(as))
   }
 
 }

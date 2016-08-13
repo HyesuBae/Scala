@@ -8,6 +8,8 @@ object MyModule {
     println(formatResult("absolute", -35, abs))
     println(formatResult("factorial", 6, factorial))
     println( findFirst(Array(7,9,13), (x: Int) => x == 14))
+
+
   }
   def abs(n: Int): Int ={
     if(n < 0) -n

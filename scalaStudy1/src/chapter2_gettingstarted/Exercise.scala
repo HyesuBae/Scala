@@ -7,6 +7,7 @@ object Exercise {
   def main(args: Array[String]): Unit = {
     println(Exercise.fib(6))
     println(Exercise.fib2(6))
+    print(isSorted(Array(3,4,5), (a:Int, b:Int) => a==b))
   }
 
   // Exercise 2.1  T_T
@@ -31,7 +32,7 @@ object Exercise {
   // Exercise 2.2
   def isSorted[A](as: Array[A], ordered: (A,A) => Boolean): Boolean ={
     def loop(n: Int) : Boolean ={
-      if (n >= as.length) true    // 땡! as.length-1 까지 계산해야함. 아래 else if에서 array의 n+1값도 조회하니까.
+      if (n >= as.length -1) true    // 땡! as.length-1 까지 계산해야함. 아래 else if에서 array의 n+1값도 조회하니까.
       else if(ordered(as(n), as(n+1))) false
       else loop(n+1)
     }

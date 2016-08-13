@@ -6,6 +6,8 @@ package ch3_datastructures
 object Exercise {
   def main(args: Array[String]): Unit = {
     exercise1()
+    println(List.drop(List(1,2,3,4,5),2))
+    println(List.append(List("Hello", "world"), List("!","!")))
   }
 
   def sum(ints: List[Int]): Int = ints match{
