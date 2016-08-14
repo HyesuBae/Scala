@@ -60,16 +60,62 @@ object List {
 
   // Exercise 3.5 (못풀었음ㅠㅠ)
   // case에서 if문도 쓸 수 있다!
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match{
-    case Cons(a, as) if f(a) => dropWhile(as, f)
+  def dropWhile1[A](l: List[A], f: A => Boolean): List[A] = l match{
+    case Cons(a, as) if f(a) => dropWhile1(as, f)
+    case _ => l
+  }
+
+
+  // dropWhile1에서는 f에서 parameter의 형식을 명시해야하지만 이 버전에서는 명시하지 않아도 됨.
+  // 즉 dropwhile1은 dropWhile1(List(1,2,3), (x: Int) => x < 2) 처럼 x의 타입을 지정해야하지만
+  // dropWhile2는 dropWhile2(List(1,2,3))(x => x < 2) 처럼 x의 타입을 지정하지 않아도 됨.
+  // dropWhile2(List(1,2,3))은 하나의 함수를 돌려주며 그 함수에 다시 f를 argument로 전달한다.
+  //    => "dropWhile2는 커링되었다."
+  def dropWhile2[A](l: List[A])(f: A => Boolean): List [A] =  l match{
+    case Cons(a, as) if f(a) => dropWhile2(as)(f)
     case _ => l
   }
 
   // Exercise 3.6 (못풀었음ㅠㅠ)
-  def init[A](l: List[A]): List[A] = l match{
-    case Nil => Nil
-    case (_, Nil) => Nil  // 마지가 원소 하나에 대해서 바로 Nil을 리턴해줌으로써 마지막 원소를 제거하는 셈.
-    case Cons(a, as) => Cons(a, init(as))
+  //def init[A](l: List[A]): List[A] = l match{
+  //  case Nil => Nil
+  //  case (_, Nil) => Nil  // 마지가 원소 하나에 대해서 바로 Nil을 리턴해줌으로써 마지막 원소를 제거하는 셈.
+  //  case Cons(a, as) => Cons(a, init(as))
+  //}
+
+
+  //////////////// 3.4
+
+  // 위의 sum, product 함수에서는 입력 리스트가 Nil일 때 Nil을 리턴해주는 부분이 중복된다.
+  // 이 중복되는 부분을 대체하기 위한 함수. 다만 리턴 값은 z로 지정하여 sum과 product가 동일한 값을 리턴할 필요는 없도록 함.
+  def foldRight[A,B](as: List[A], z: B)(f: (A, B) => B): B = as match{
+    case Nil => z
+    case Cons(x, xs) => f(x, foldRight(xs, z)(f))
   }
+
+  def sum2(ns: List[Int]) = {
+    foldRight(ns, 0)((x,y) => x + y)
+
+    //3.8
+    //foldRight(ns, Nil:List[Int])(Cons(_,_))
+  }
+
+  def product2(ns: List[Double]) = {
+    foldRight(ns, 1.0)(_ * _)   // (_ * _)는 (x, y) => x* y를 간결하게 표현한 것.
+    // 스칼라가 x와 y의 형식을 추론할 수 있다면 익명함수 (x,y) => x + y를 _ + _ 로 표현할 수 있다.
+    // 이는 함수 parameter가 본문 안에서 한 번씩만 언급될 떄 유용한 단축 표기법이다.
+  }
+
+  // Exercise 3.9 (못 풀었음)
+  // (_, n) => n + 1이 어떻게 길이 계산이 되는 거지...? n이 List의 원소 중 하나가 아니라
+  // foldRight에서 z값인가?ㅠㅠ
+  def length[A](as: List[A]): Int = {
+    foldRight(as, 0)((_, n) => n + 1)
+  }
+
+  // Exercise 3.10
+
+
+
 
 }

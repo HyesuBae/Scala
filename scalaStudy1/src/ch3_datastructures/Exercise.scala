@@ -8,6 +8,9 @@ object Exercise {
     exercise1()
     println(List.drop(List(1,2,3,4,5),2))
     println(List.append(List("Hello", "world"), List("!","!")))
+    println(List.foldRight(List(1,2,3), Nil: List[Int])(Cons(_,_)))
+    println(List.sum2(List(1,2,3)))
+    println(List.length(List(1,2,3,4,6)))
   }
 
   def sum(ints: List[Int]): Int = ints match{
