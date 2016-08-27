@@ -10,7 +10,11 @@ object Exercise {
     println(List.append(List("Hello", "world"), List("!","!")))
     println(List.foldRight(List(1,2,3), Nil: List[Int])(Cons(_,_)))
     println(List.sum2(List(1,2,3)))
-    println(List.length(List(1,2,3,4,6)))
+    println(List.length(List(1,2,3,4,6,8,9,10,11,12,13,14,15,16,17,20,23,25,27,28,30,31,32)))
+    println(List.reverse(List(1,2,3)))
+    println(List.append2viaFoldLeft(List(1,2,3), List(4,5,6)))
+    println(List.append2viaFoldRight(List(1,2,3), List(4,5,6)))
+    println(List.addOne(List(1,2,3)))
   }
 
   def sum(ints: List[Int]): Int = ints match{

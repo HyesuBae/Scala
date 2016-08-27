@@ -88,6 +88,7 @@ object List {
 
   // 위의 sum, product 함수에서는 입력 리스트가 Nil일 때 Nil을 리턴해주는 부분이 중복된다.
   // 이 중복되는 부분을 대체하기 위한 함수. 다만 리턴 값은 z로 지정하여 sum과 product가 동일한 값을 리턴할 필요는 없도록 함.
+
   def foldRight[A,B](as: List[A], z: B)(f: (A, B) => B): B = as match{
     case Nil => z
     case Cons(x, xs) => f(x, foldRight(xs, z)(f))
@@ -114,8 +115,63 @@ object List {
   }
 
   // Exercise 3.10
+  // 못 풀었음 ^ㅠ^
+  @annotation.tailrec
+  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = as match{
+    case Nil => z
+    case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
+  }
 
+  //Exercise 3.11
+  def sum3(as: List[Int]) = {
+    foldLeft(as, 0)(_ + _)
+  }
 
+  def product3(as: List[Double]) = {
+    foldLeft(as, 1.0)(_ * _)
+  }
 
+  def length2[A](as: List[A]): Int = {
+    foldLeft(as, 0)((n, _) => n + 1)
+  }
 
+  //Exercise 3.12
+  def reverse[A](as: List[A]): List[A] = {
+    foldLeft(as, List[A]())((xs, x) => Cons(x, xs))
+  }
+
+  // Exercise 3.13 => 일단 패스
+
+  // Exercise 3.14
+  def append2viaFoldLeft[A](as1: List[A], as2: List[A]): List[A] ={
+    foldLeft(reverse(as1), as2)((xs, x) => Cons(x, xs))
+  }
+
+  def append2viaFoldRight[A](as1: List[A], as2: List[A]): List[A] = {
+    foldRight(as1, as2)((x, xs) => Cons(x, xs))   // x와 xs는 f 안에서 한번씩만 순서대로 사용되므로 Cons(_, _)로 표현 가능.
+  }
+
+  // Exercise 3.15 => 일단 패스
+
+  // Exercise 3.16
+  def addOne(ints: List[Int]): List[Int] = ints match{
+    case Nil => Nil
+    case Cons(x, xs) => Cons(x+1, addOne(xs))
+  }
+
+  // 논리는 맞았는데 Nil의 타입을 List[Int]로 지정해야하는지 몰랐음.
+  // 왜 지정해야할까?
+  def addOne2(ints: List[Int]): List[Int] = {
+    foldRight(ints, Nil: List[Int])((x, xs) => Cons(x+1, xs))
+  }
+
+  // Exercise 3.17
+  def doubleToString(ds: List[Double]): List[String] = ds match{
+    case Nil => Nil
+    case Cons(x, xs) => Cons(x.toString, doubleToString(xs))
+  }
+
+  def doubleToString2(ds: List[Double]): List[String] = {
+    foldRight(ds, Nil: List[String])((x, xs) => Cons(x.toString, xs))
+  }
 }
