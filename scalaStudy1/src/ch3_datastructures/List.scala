@@ -174,4 +174,24 @@ object List {
   def doubleToString2(ds: List[Double]): List[String] = {
     foldRight(ds, Nil: List[String])((x, xs) => Cons(x.toString, xs))
   }
+
+  // Exercise 3.18
+  def map[A,B](as: List[A])(f: A => B): List[B] = as match{
+    case Nil => Nil
+    case Cons(x, xs) => Cons(f(x), map(xs)(f))
+  }
+
+  def map2[A,B](as: List[A])(f: A => B): List[B] = {
+    foldRight(as, Nil:List[B])((x, xs) => Cons(f(x), xs))
+  }
+
+  // Exercise 3.19
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = as match{
+    case Nil => Nil
+    case Cons(x, xs) => if (f(x)) Cons(x, filter(xs)(f)) else filter(xs)(f)
+  }
+
+  def filter2[A](as: List[A])(f: A => Boolean): List[A] = {
+    foldRight(as, Nil:List[A])((x, xs) => if (f(x)) Cons(x, filter(xs)(f)) else filter(xs)(f))
+  }
 }

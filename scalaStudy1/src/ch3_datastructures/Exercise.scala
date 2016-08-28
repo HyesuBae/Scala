@@ -15,6 +15,8 @@ object Exercise {
     println(List.append2viaFoldLeft(List(1,2,3), List(4,5,6)))
     println(List.append2viaFoldRight(List(1,2,3), List(4,5,6)))
     println(List.addOne(List(1,2,3)))
+    println(List.filter(List(1,3,5,2,4))(_ % 2 == 0))
+    println(List.filter2(List(1,3,5,2,4))(_ % 2 == 0))
   }
 
   def sum(ints: List[Int]): Int = ints match{
